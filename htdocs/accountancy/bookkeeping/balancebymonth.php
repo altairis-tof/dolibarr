@@ -29,6 +29,8 @@ require '../../main.inc.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/date.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/accounting.lib.php';
 
+$result=restrictedArea($user,'accounting','','','comptarapport');
+
 // Load translation files required by the page
 $langs->loadLangs(array("bills","compta","accountancy","other"));
 
