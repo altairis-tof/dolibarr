@@ -547,7 +547,7 @@ if ($id > 0 || ! empty($ref)) {
 					print '<td></td>';
 					print '<td></td>';
 				}
-				print '<td class="right">' . $langs->trans("SupplierRef") . '</td>';
+				//print '<td class="right">' . $langs->trans("SupplierRef") . '</td>';
 				print '<td class="right">' . $langs->trans("QtyOrdered") . '</td>';
 				print '<td class="right">' . $langs->trans("QtyDispatchedShort") . '</td>';
 				print '<td class="right">' . $langs->trans("QtyToDispatchShort") . '</td>';
@@ -631,7 +631,7 @@ if ($id > 0 || ! empty($ref)) {
 							$up_ht_disc = price2num($up_ht_disc * (100 - $objp->remise_percent) / 100, 'MU');
 
 						// Supplier ref
-						print '<td class="right">'.$objp->sref.'</td>';
+						//print '<td class="right">'.$objp->sref.'</td>';
 
 						// Qty ordered
 						print '<td class="right">' . $objp->qty . '</td>';
@@ -724,7 +724,7 @@ if ($id > 0 || ! empty($ref)) {
 							print '</tr>';
 
 							print '<tr class="oddeven" name="' . $type . $suffix . '">';
-							print '<td colspan="7">';
+							print '<td colspan="6">';
 							print '<input name="fk_commandefourndet' . $suffix . '" type="hidden" value="' . $objp->rowid . '">';
 							print '<input name="product' . $suffix . '" type="hidden" value="' . $objp->fk_product . '">';
 
