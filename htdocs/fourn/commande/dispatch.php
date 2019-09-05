@@ -864,7 +864,7 @@ if ($id > 0 || ! empty($ref)) {
 	}
 
 	dol_fiche_end();
-die('test');
+
 	// traitement entrepot par défaut
 	print '<script type="text/javascript">
 			$(document).ready(function () {
