@@ -339,7 +339,7 @@ class pdf_crabe_ise_solidaire extends ModelePDFFactures
 				{
 					$tab_top = 92;
 
-					$desc_prime = 'Les travaux relatifs à ce devis sont éligibles au dispositif des certificats d\'économie d\'énergie. Dans ce cadre, l\'obligé "vos travaux eco", grâce à son partenaire "ISOLATION PAR SOUFFLAGE DE L\'EST" me fait bénéficier d\'une prime énergie , dont le montant sera avancé par "ISOLATION PAR SOUFFLAGE DE L EST" et remboursé  par vos travaux Eco à "ISOLATION PAR SOUFFLAGE DE L EST".<br/><br/><b>La prime énergie VTE versée sous la forme d\'une remise en Euros est d\'un montant de '.price($object->array_options['options_prime'], 0, $outputlangs).' € (TTC)</b>';
+					$desc_prime = $conf->global->REMISE_CEE.' '.price($object->array_options['options_prime'], 0, $outputlangs).' €';
 
 					$pdf->SetFont('','', $default_font_size - 1);
 					$pdf->writeHTMLCell(190, 3, $this->posxdesc-1, $tab_top-1, dol_htmlentitiesbr($desc_prime), 0, 1,null,null,'C');

@@ -341,7 +341,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 
 					$desc_prime = $conf->global->REMISE_CEE.' '.price($object->array_options['options_prime'], 0, $outputlangs).' €';
 
-					$pdf->SetFont('','B', $default_font_size - 1);
+					$pdf->SetFont('','', $default_font_size - 1);
 					$pdf->writeHTMLCell(190, 3, $this->posxdesc-1, $tab_top-1, dol_htmlentitiesbr($desc_prime), 0, 1,null,null,'C');
 					$nexY = $pdf->GetY();
 					$height_prime=$nexY-$tab_top;
