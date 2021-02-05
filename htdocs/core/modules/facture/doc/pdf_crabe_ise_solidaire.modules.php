@@ -83,8 +83,8 @@ class pdf_crabe_ise_solidaire extends ModelePDFFactures
 		$langs->load("bills");
 
 		$this->db = $db;
-		$this->name = "crabe_ISE_Solidaire";
-		$this->description = $langs->trans('Modèle ISE Solidaire');
+		$this->name = "crabe_IsolHouse_Solidaire";
+		$this->description = $langs->trans('Modèle IsolHouse Solidaire');
 
 		// Dimension page pour format A4
 		$this->type = 'pdf';
@@ -329,7 +329,7 @@ class pdf_crabe_ise_solidaire extends ModelePDFFactures
 				$pdf->SetTextColor(0,0,0);
 
 				$tab_top = 90;
-				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?42:10);
+				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?44:10);
 				$tab_height = 130;
 				$tab_height_newpage = 150;
 
@@ -1275,7 +1275,7 @@ class pdf_crabe_ise_solidaire extends ModelePDFFactures
 			$pdf->SetXY($col1x, $tab2_top + $tab2_hl * $index);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFillColor(255,255,255);
-			$pdf->MultiCell($col1x, $tab2_hl, "Prime énergie VTE", $useborder, 'L', 1);
+			$pdf->MultiCell($col1x, $tab2_hl, "Remise CEE", $useborder, 'L', 1);
 
 			$pdf->SetXY($col2x, $tab2_top + $tab2_hl * $index);
 			$pdf->MultiCell($largcol2, $tab2_hl, price($object->array_options['options_prime'], 0, $outputlangs), $useborder, 'R', 1);
@@ -1627,7 +1627,7 @@ class pdf_crabe_ise_solidaire extends ModelePDFFactures
 			if (! empty($targetcontact->phone_mobile)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->phone_mobile);
 			if (! empty($targetcontact->fax)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->fax);
 
-			$posy+=4;
+			$posy+=2;
 			$pdf->SetXY($posx,$posy);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFont('','', $default_font_size);
@@ -1651,7 +1651,7 @@ class pdf_crabe_ise_solidaire extends ModelePDFFactures
 			$carac_emetteur = pdf_build_address($outputlangs, $this->emetteur, $object->thirdparty);
 
 			// Show sender
-			$nexY=max(42,$pdf->getY());
+			$nexY=max(44,$pdf->getY());
 			$posy=$nexY;
 			$posx=$this->marge_gauche;
 			if (! empty($conf->global->MAIN_INVERT_SENDER_RECIPIENT)) $posx=$this->page_largeur-$this->marge_droite-80;

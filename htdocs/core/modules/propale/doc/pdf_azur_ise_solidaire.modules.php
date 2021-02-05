@@ -71,8 +71,8 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 		$langs->load("bills");
 
 		$this->db = $db;
-		$this->name = "azur ISE Solidaire";
-		$this->description = $langs->trans('Modèle ISE Solidaire');
+		$this->name = "azur_IsolHouse_Solidaire";
+		$this->description = $langs->trans('Modèle IsolHouse Solidaire');
 
 		// Dimension page pour format A4
 		$this->type = 'pdf';
@@ -270,7 +270,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 				// Create pdf instance
                 $pdf=pdf_getInstance($this->format);
                 $default_font_size = pdf_getPDFFontSize($outputlangs);	// Must be after pdf_getInstance
-                $heightforinfotot = 70;	// Height reserved to output the info and total part
+                $heightforinfotot = 60;	// Height reserved to output the info and total part
 		        $heightforfreetext= (isset($conf->global->MAIN_PDF_FREETEXT_HEIGHT)?$conf->global->MAIN_PDF_FREETEXT_HEIGHT:5);	// Height reserved to output the free text on last page
 	            $heightforfooter = $this->marge_basse + 8;	// Height reserved to output the footer (value include bottom margin)
                 $pdf->SetAutoPageBreak(1,0);
@@ -329,7 +329,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 				$pdf->SetTextColor(0,0,0);
 
 				$tab_top = 90;
-				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?42:10);
+				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?44:10);
 				$tab_height = 130;
 				$tab_height_newpage = 150;
 
@@ -338,9 +338,8 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 				if (!empty($object->array_options['options_prime']))
 				{
 					$tab_top = 92;
-					if (empty($object->array_options['options_oblige'])) $object->array_options['options_oblige'] = 'VTE'; // pour anciennes propales
 
-					$desc_prime = $conf->global->{"OBLIGE_".$object->array_options['options_oblige']}.' '.price($object->array_options['options_prime'], 0, $outputlangs).' €';
+					$desc_prime = $conf->global->REMISE_CEE.' '.price($object->array_options['options_prime'], 0, $outputlangs).' €';
 
 					$pdf->SetFont('','B', $default_font_size - 1);
 					$pdf->writeHTMLCell(190, 3, $this->posxdesc-1, $tab_top-1, dol_htmlentitiesbr($desc_prime), 0, 1,null,null,'C');
@@ -1233,7 +1232,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 			$pdf->SetXY($col1x, $tab2_top + $tab2_hl * $index);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFillColor(255,255,255);
-			$pdf->MultiCell($col1x, $tab2_hl, "Prime énergie ".$object->array_options['options_oblige'], $useborder, 'L', 1);
+			$pdf->MultiCell($col1x, $tab2_hl, "Remise CEE ", $useborder, 'L', 1);
 
 			$pdf->SetXY($col2x, $tab2_top + $tab2_hl * $index);
 			$pdf->MultiCell($largcol2, $tab2_hl, price($object->array_options['options_prime'], 0, $outputlangs), $useborder, 'R', 1);
@@ -1438,7 +1437,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 		$pdf->SetFont('','B',$default_font_size + 3);
 		$pdf->SetXY($posx,$posy);
 		$pdf->SetTextColor(0,0,60);
-		$title=$outputlangs->transnoentities("CommercialProposal");
+		$title=$outputlangs->transnoentities("Devis");
 		$pdf->MultiCell(100, 4, $title, '', 'R');
 
 		$pdf->SetFont('','B',$default_font_size);
@@ -1501,7 +1500,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 			if (! empty($targetcontact->phone_mobile)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->phone_mobile);
 			if (! empty($targetcontact->fax)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->fax);
 
-			$posy+=4;
+			$posy+=2;
 			$pdf->SetXY($posx,$posy);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFont('','', $default_font_size);
@@ -1534,7 +1533,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 		 	$carac_emetteur .= pdf_build_address($outputlangs, $this->emetteur, $object->thirdparty);
 
 			// Show sender
-			$nexY=max(42,$pdf->getY());
+			$nexY=max(44,$pdf->getY());
 			$posy=$nexY;
 		 	$posx=$this->marge_gauche;
 			if (! empty($conf->global->MAIN_INVERT_SENDER_RECIPIENT)) $posx=$this->page_largeur-$this->marge_droite-80;
@@ -1651,9 +1650,9 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 		$tab_hl = 6;
 		$pdf->SetFont('','', $default_font_size - 1);
 
-		// cadre de gauche
-		$posx = 10;
-		$largcol = 100;
+		// cadre de signature
+		$posx = 120;
+		$largcol = ($this->page_largeur - $this->marge_droite - $posx);
 		$useborder=0;
 		$index = 0;
 
@@ -1669,25 +1668,25 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 		$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 14);
 		$pdf->MultiCell($largcol - 2, $tab_hl, 'signature précédée de la mention "lu et approuvé"', 0, 'L', 1);
 
-		$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 18);
-		$pdf->MultiCell($largcol - 2, $tab_hl, "après avoir pris connaissance des conditions générales d'intervention jointes.", 0, 'L', 1);
+		//Commented by Christophe Battarel$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 30);
+		//Commented by Christophe Battarel$pdf->MultiCell($largcol - 2, $tab_hl, "après avoir pris connaissance des conditions générales d'intervention jointes.", 0, 'L', 1);
 
 		$pdf->SetXY($posx, $tab_top + $tab_hl);
 		$pdf->MultiCell($largcol, $tab_hl*6, '', 1, 'R');
 
-		// cadre de droite
-		$posx = 120;
-		$largcol2 = ($this->page_largeur - $this->marge_droite - $posx);
-		$useborder=0;
-		$index = 0;
+		//Commented by Christophe Battarel// cadre de droite
+		//Commented by Christophe Battarel$posx = 120;
+		//Commented by Christophe Battarel$largcol2 = ($this->page_largeur - $this->marge_droite - $posx);
+		//Commented by Christophe Battarel$useborder=0;
+		//Commented by Christophe Battarel$index = 0;
 
-		$pdf->SetFillColor(255,255,255);
-		$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 2);
-		$pdf->SetFont('','', $default_font_size - 4);
-		$pdf->MultiCell($largcol2 - 2, $tab_hl, "Pour ISE", 0, 'L', 1);
+		//Commented by Christophe Battarel$pdf->SetFillColor(255,255,255);
+		//Commented by Christophe Battarel$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 2);
+		//Commented by Christophe Battarel$pdf->SetFont('','', $default_font_size - 4);
+		//Commented by Christophe Battarel$pdf->MultiCell($largcol2 - 2, $tab_hl, "Pour IsolHouse", 0, 'L', 1);
 
-		$pdf->SetXY($posx, $tab_top + $tab_hl);
-		$pdf->MultiCell($largcol2, $tab_hl*6, '', 1, 'R');
+		//Commented by Christophe Battarel$pdf->SetXY($posx, $tab_top + $tab_hl);
+		//Commented by Christophe Battarel$pdf->MultiCell($largcol2, $tab_hl*6, '', 1, 'R');
 
 		return ($tab_hl*7);
 	}

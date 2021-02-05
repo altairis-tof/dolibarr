@@ -83,8 +83,8 @@ class pdf_crabe_ise extends ModelePDFFactures
 		$langs->load("bills");
 
 		$this->db = $db;
-		$this->name = "crabe_ISE";
-		$this->description = $langs->trans('Modèle ISE');
+		$this->name = "crabe_IsolHouse";
+		$this->description = $langs->trans('Modèle IsolHouse');
 
 		// Dimension page pour format A4
 		$this->type = 'pdf';
@@ -329,7 +329,7 @@ class pdf_crabe_ise extends ModelePDFFactures
 				$pdf->SetTextColor(0,0,0);
 
 				$tab_top = 90;
-				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?42:10);
+				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?44:10);
 				$tab_height = 130;
 				$tab_height_newpage = 150;
 
@@ -1567,7 +1567,7 @@ class pdf_crabe_ise extends ModelePDFFactures
 			if (! empty($targetcontact->phone_mobile)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->phone_mobile);
 			if (! empty($targetcontact->fax)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->fax);
 
-			$posy+=4;
+			$posy+=2;
 			$pdf->SetXY($posx,$posy);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFont('','', $default_font_size);
@@ -1591,7 +1591,7 @@ class pdf_crabe_ise extends ModelePDFFactures
 			$carac_emetteur = pdf_build_address($outputlangs, $this->emetteur, $object->thirdparty);
 
 			// Show sender
-			$nexY=max(42,$pdf->getY());
+			$nexY=max(44,$pdf->getY());
 			$posy=$nexY;
 			$posx=$this->marge_gauche;
 			if (! empty($conf->global->MAIN_INVERT_SENDER_RECIPIENT)) $posx=$this->page_largeur-$this->marge_droite-80;

@@ -71,8 +71,8 @@ class pdf_azur_ise extends ModelePDFPropales
 		$langs->load("bills");
 
 		$this->db = $db;
-		$this->name = "azur ISE";
-		$this->description = $langs->trans('Modèle ISE');
+		$this->name = "azur_IsolHouse";
+		$this->description = $langs->trans('Modèle IsolHouse');
 
 		// Dimension page pour format A4
 		$this->type = 'pdf';
@@ -329,7 +329,7 @@ class pdf_azur_ise extends ModelePDFPropales
 				$pdf->SetTextColor(0,0,0);
 
 				$tab_top = 90;
-				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?42:10);
+				$tab_top_newpage = (empty($conf->global->MAIN_PDF_DONOTREPEAT_HEAD)?44:10);
 				$tab_height = 130;
 				$tab_height_newpage = 150;
 
@@ -1409,7 +1409,7 @@ class pdf_azur_ise extends ModelePDFPropales
 		$pdf->SetFont('','B',$default_font_size + 3);
 		$pdf->SetXY($posx,$posy);
 		$pdf->SetTextColor(0,0,60);
-		$title=$outputlangs->transnoentities("CommercialProposal");
+		$title=$outputlangs->transnoentities("Devis");
 		$pdf->MultiCell(100, 4, $title, '', 'R');
 
 		$pdf->SetFont('','B',$default_font_size);
@@ -1472,7 +1472,7 @@ class pdf_azur_ise extends ModelePDFPropales
 			if (! empty($targetcontact->phone_mobile)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->phone_mobile);
 			if (! empty($targetcontact->fax)) $phoneinfo .= $outputlangs->convToOutputCharset($targetcontact->fax);
 
-			$posy+=4;
+			$posy+=2;
 			$pdf->SetXY($posx,$posy);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFont('','', $default_font_size);
@@ -1505,7 +1505,7 @@ class pdf_azur_ise extends ModelePDFPropales
 		 	$carac_emetteur .= pdf_build_address($outputlangs, $this->emetteur, $object->thirdparty);
 
 			// Show sender
-			$nexY=max(42,$pdf->getY());
+			$nexY=max(44,$pdf->getY() + 2);
 			$posy=$nexY;
 		 	$posx=$this->marge_gauche;
 			if (! empty($conf->global->MAIN_INVERT_SENDER_RECIPIENT)) $posx=$this->page_largeur-$this->marge_droite-80;
