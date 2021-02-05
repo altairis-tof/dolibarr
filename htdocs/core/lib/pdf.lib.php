@@ -454,8 +454,8 @@ function pdf_build_address($outputlangs, $sourcecompany, $targetcompany = '', $t
     			if (preg_match('/\((.+)\)/', $tmp, $reg)) $tmp = $reg[1];
     			$stringaddress .= ($stringaddress ? "\n" : '').$tmp.': '.$outputlangs->convToOutputCharset($sourcecompany->idprof6);
     		}
-    		if (!empty($conf->global->PDF_ADD_MORE_AFTER_SOURCE_ADDRESS)) {
-    			$stringaddress .= ($stringaddress ? "\n" : '').$conf->global->PDF_ADD_MORE_AFTER_SOURCE_ADDRESS;
+    		if (!empty($conf->global->MAIN_INFO_SOCIETE_OBJECT)) {
+    			$stringaddress .= ($stringaddress ? "\n" : '').$conf->global->MAIN_INFO_SOCIETE_OBJECT;
     		}
     	}
 
