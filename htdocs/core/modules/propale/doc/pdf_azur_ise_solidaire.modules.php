@@ -309,7 +309,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 						$this->atleastonediscount++;
 					}
 				}
-				if (empty($this->atleastonediscount))// && empty($conf->global->PRODUCT_USE_UNITS))
+				if (empty($this->atleastonediscount))
 				{
 					$this->posxpicture+=($this->postotalht - $this->posxdiscount);
 					$this->posxtva+=($this->postotalht - $this->posxdiscount);
@@ -317,7 +317,6 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 					$this->posxqty+=($this->postotalht - $this->posxdiscount);
 					$this->posxunit+=($this->postotalht - $this->posxdiscount);
 					$this->posxdiscount+=($this->postotalht - $this->posxdiscount);
-					//Commented by Christophe Battarel$this->postotalht+=($this->postotalht - $this->posxdiscount);
 				}
 
 				// New page

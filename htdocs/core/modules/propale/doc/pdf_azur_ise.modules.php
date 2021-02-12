@@ -106,19 +106,19 @@ class pdf_azur_ise extends ModelePDFPropales
 		$this->posxdesc=$this->marge_gauche+1;
 		if($conf->global->PRODUCT_USE_UNITS)
 		{
-			$this->posxtva=99;
-			$this->posxup=114;
-			$this->posxqty=133;
-			$this->posxunit=150;
+			$this->posxtva=109;
+			$this->posxup=124;
+			$this->posxqty=143;
+			$this->posxunit=155;
 		}
 		else
 		{
-			$this->posxtva=112;
-			$this->posxup=126;
-			$this->posxqty=145;
+			$this->posxtva=122;
+			$this->posxup=136;
+			$this->posxqty=155;
 		}
-		$this->posxdiscount=162;
-		$this->postotalht=174;
+		$this->posxdiscount=167;
+		$this->postotalht=179;
 		if (! empty($conf->global->MAIN_GENERATE_DOCUMENTS_WITHOUT_VAT)) $this->posxtva=$this->posxup;
 		$this->posxpicture=$this->posxtva - (empty($conf->global->MAIN_DOCUMENTS_WITH_PICTURE_WIDTH)?20:$conf->global->MAIN_DOCUMENTS_WITH_PICTURE_WIDTH);	// width of images
 		if ($this->page_largeur < 210) // To work with US executive format
@@ -309,14 +309,14 @@ class pdf_azur_ise extends ModelePDFPropales
 						$this->atleastonediscount++;
 					}
 				}
-				if (empty($this->atleastonediscount) && empty($conf->global->PRODUCT_USE_UNITS))
+				if (empty($this->atleastonediscount))
 				{
 					$this->posxpicture+=($this->postotalht - $this->posxdiscount);
 					$this->posxtva+=($this->postotalht - $this->posxdiscount);
 					$this->posxup+=($this->postotalht - $this->posxdiscount);
 					$this->posxqty+=($this->postotalht - $this->posxdiscount);
+					$this->posxunit+=($this->postotalht - $this->posxdiscount);
 					$this->posxdiscount+=($this->postotalht - $this->posxdiscount);
-					//$this->postotalht;
 				}
 
 				// New page
@@ -1343,7 +1343,7 @@ class pdf_azur_ise extends ModelePDFPropales
 		if (empty($hidetop))
 		{
 			$pdf->SetXY($this->postotalht-1, $tab_top+1);
-			$pdf->MultiCell(30,2, $outputlangs->transnoentities("TotalHT"),'','C');
+			$pdf->MultiCell(20,2, $outputlangs->transnoentities("TotalHT"),'','C');
 		}
 	}
 
