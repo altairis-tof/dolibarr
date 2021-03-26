@@ -1274,7 +1274,7 @@ class pdf_crabe_ise_solidaire extends ModelePDFFactures
 			$pdf->SetXY($col1x, $tab2_top + $tab2_hl * $index);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFillColor(255,255,255);
-			$pdf->MultiCell($col1x, $tab2_hl, "Remise CEE", $useborder, 'L', 1);
+			$pdf->MultiCell($col1x, $tab2_hl, "Déduction CEE", $useborder, 'L', 1);
 
 			$pdf->SetXY($col2x, $tab2_top + $tab2_hl * $index);
 			$pdf->MultiCell($largcol2, $tab2_hl, price($object->array_options['options_prime'], 0, $outputlangs), $useborder, 'R', 1);

@@ -270,7 +270,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 				// Create pdf instance
                 $pdf=pdf_getInstance($this->format);
                 $default_font_size = pdf_getPDFFontSize($outputlangs);	// Must be after pdf_getInstance
-                $heightforinfotot = 60;	// Height reserved to output the info and total part
+                $heightforinfotot = 80;	// Height reserved to output the info and total part
 		        $heightforfreetext= (isset($conf->global->MAIN_PDF_FREETEXT_HEIGHT)?$conf->global->MAIN_PDF_FREETEXT_HEIGHT:5);	// Height reserved to output the free text on last page
 	            $heightforfooter = $this->marge_basse + 8;	// Height reserved to output the footer (value include bottom margin)
                 $pdf->SetAutoPageBreak(1,0);
@@ -670,7 +670,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 				// Customer signature area
 				if (empty($conf->global->PROPAL_DISABLE_SIGNATURE))
 				{
-				    $posy=$this->_signature_area($pdf, $object, 230, $outputlangs);
+				    $posy=$this->_signature_area($pdf, $object, 226, $outputlangs);
 				}
 
 				// Pied de page
@@ -1232,7 +1232,7 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 			$pdf->SetXY($col1x, $tab2_top + $tab2_hl * $index);
 			$pdf->SetTextColor(0,0,60);
 			$pdf->SetFillColor(255,255,255);
-			$pdf->MultiCell($col1x, $tab2_hl, "Remise CEE ", $useborder, 'L', 1);
+			$pdf->MultiCell($col1x, $tab2_hl, "Déduction CEE ", $useborder, 'L', 1);
 
 			$pdf->SetXY($col2x, $tab2_top + $tab2_hl * $index);
 			$pdf->MultiCell($largcol2, $tab2_hl, price($object->array_options['options_prime'], 0, $outputlangs), $useborder, 'R', 1);
@@ -1646,9 +1646,23 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 	function _signature_area(&$pdf, $object, $posy, $outputlangs)
 	{
 		$default_font_size = pdf_getPDFFontSize($outputlangs);
-		$tab_top = $posy + 4;
+		$tab_top = $posy;
 		$tab_hl = 6;
 		$pdf->SetFont('','', $default_font_size - 1);
+
+		// cadre de gauche
+		$posx = 10;
+		$largcol2 = 85;
+		$useborder=0;
+		$index = 0;
+
+		$pdf->SetFillColor(255,255,255);
+		$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 2);
+		$pdf->SetFont('','', $default_font_size - 4);
+		$pdf->MultiCell($largcol2 - 2, $tab_hl, "Pour l'entreprise; commande acceptée", 0, 'L', 1);
+
+		$pdf->SetXY($posx, $tab_top + $tab_hl);
+		$pdf->MultiCell($largcol2, $tab_hl*6, '', 1, 'R');
 
 		// cadre de signature
 		$posx = 120;
@@ -1666,27 +1680,13 @@ class pdf_azur_ise_solidaire extends ModelePDFPropales
 
 		$pdf->SetFont('','I', $default_font_size - 4);
 		$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 14);
-		$pdf->MultiCell($largcol - 2, $tab_hl, 'signature précédée de la mention "lu et approuvé"', 0, 'L', 1);
+		$pdf->MultiCell($largcol - 2, $tab_hl, 'signature précédée de la mention "lu et approuvé, bon pour commande"', 0, 'L', 1);
 
 		//Commented by Christophe Battarel$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 30);
 		//Commented by Christophe Battarel$pdf->MultiCell($largcol - 2, $tab_hl, "après avoir pris connaissance des conditions générales d'intervention jointes.", 0, 'L', 1);
 
 		$pdf->SetXY($posx, $tab_top + $tab_hl);
 		$pdf->MultiCell($largcol, $tab_hl*6, '', 1, 'R');
-
-		//Commented by Christophe Battarel// cadre de droite
-		//Commented by Christophe Battarel$posx = 120;
-		//Commented by Christophe Battarel$largcol2 = ($this->page_largeur - $this->marge_droite - $posx);
-		//Commented by Christophe Battarel$useborder=0;
-		//Commented by Christophe Battarel$index = 0;
-
-		//Commented by Christophe Battarel$pdf->SetFillColor(255,255,255);
-		//Commented by Christophe Battarel$pdf->SetXY($posx + 2, $tab_top + $tab_hl + 2);
-		//Commented by Christophe Battarel$pdf->SetFont('','', $default_font_size - 4);
-		//Commented by Christophe Battarel$pdf->MultiCell($largcol2 - 2, $tab_hl, "Pour IsolHouse", 0, 'L', 1);
-
-		//Commented by Christophe Battarel$pdf->SetXY($posx, $tab_top + $tab_hl);
-		//Commented by Christophe Battarel$pdf->MultiCell($largcol2, $tab_hl*6, '', 1, 'R');
 
 		return ($tab_hl*7);
 	}
